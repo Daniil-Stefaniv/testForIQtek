@@ -26,7 +26,7 @@ function isAnagram(s, t) {
 
     review.pop(letter)
   })
-  // console.log("arrT: ", arrT, "review: ", review)
+
   return review.length === arrT.length ? true : false
 };
 
