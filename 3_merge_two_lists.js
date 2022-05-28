@@ -9,13 +9,66 @@ function ListNode(val, next) {
  * @return {ListNode | null}
  */
 function mergeLists(list1, list2) {
+  let listOne = list1
+  let listTwo = list2
+
+  let nextOne
+  let nextTwo
   
+  if (listOne === null) return listTwo
+  else if (listTwo === null) return listOne
+  else if (listOne === null && listTwo === null) return null
+
+  const mergedListarr = []
+
+  while(listOne && listTwo) {
+    const checkArr = []
+    
+    checkArr.splice(0, 0, listOne, listTwo)
+    checkArr.sort((a, b) => a.val - b.val)
+    checkArr.map(peack => {
+      mergedListarr.push(peack)
+    })
+
+    nextOne = listOne.next
+    listOne = nextOne
+
+    nextTwo = listTwo.next
+    listTwo = nextTwo
+  }
+
+  mergedListarr.map((peack, index) => {
+    let nextPeack = mergedListarr[index + 1]
+    if (index === mergedListarr.length - 1) nextPeack = null
+    peack.next = nextPeack
+  })
+
+  return mergedListarr[0]
 }
 
+const list1 = {
+  val: 1,
+  next: {
+    val: 2,
+    next: {
+      val: 4,
+      next: null
+    }
+  }
+} 
+const list2 = {
+  val: 1,
+  next: {
+    val: 3,
+    next: {
+      val: 4,
+      next: null
+    }
+  }
+} 
 
-// console.log('quest-3: ', mergeLists([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6])) //[1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6]
-// console.log('quest-3: ', mergeLists(null, [0])) //[0]
-// console.log('quest-3: ', mergeLists([1, 2, 3, 904, 78, 120], null)) //[1, 2, 3, 78, 120, 904]
-// console.log('quest-3: ', mergeLists([4, 5, 0, 56, 9], [3])) //[0, 3, 4, 5, 9, 56]
-// console.log('quest-3: ', mergeLists([], [])) //null
-// console.log('')
+console.log("quest-3: ", mergeLists(list1, list2)) // 1 -> 1 -> 2 -> 3 -> 4 -> 4 -> null 
+console.log("quest-3: ", mergeLists(null, list2)) // 1 -> 3 -> 4 -> null 
+console.log("quest-3: ", mergeLists(list1, null)) // 1 -> 2 -> 4 -> null
+console.log("quest-3: ", mergeLists(null, null)) // null
+console.log('')
